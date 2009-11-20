@@ -1,0 +1,1008 @@
+<% content_for('body') do %>
+
+
+	<!-- Fan -->
+	<div id="fan-container"></div>
+
+	
+	<!-- Top -->
+
+	<!-- Loading div, this shows up on the initial load of the application. Does not mask loading time but just shows basic info. !-->
+
+	<% view :top_view do %>
+
+		<div class="view-heading" title="Change the content you're viewing. Either papers or authors.">Mode:</div> 
+		<%= view :viewing_mode, :view => "Papercube.ViewSelectView", :properties=> {:is_viewing_mode_selector => true}, :bind => {:value => 'Papercube.viewController.viewingMode'}%>
+		<div class="view-heading" title="Change the visualization method used to view papers or authors.">View:</div>
+		<%= view :view_choice, :view => "Papercube.ViewSelectView", :properties=> {:is_viewing_mode_selector => false}, :bind => {:value => 'Papercube.viewController.viewChoice'}%>
+		<div class="view-heading" title="Change between viewing references, outgoing relationships, to citations, incoming relationships.">Direction:</div>
+		<%= view :view_direction, :view => "Papercube.DropDownView", :properties => {:select_action => 'Papercube.viewController.setViewDirection', :func_scope => 'Papercube.viewController'
+		}, :bind => {:value => 'Papercube.viewController.viewDirection', :choices => 'Papercube.viewController.viewDirectionChoices'} %>
+
+
+		<div class="report" title="Report bugs or send in comments." onclick="javascript:window.open('http://www.peterbergstrom.com/contact');">Report bugs</div>
+
+		<div class="saved-button" title="Open the saved items pane." onclick="javascript:Papercube.viewController.showSaved();">Saved Items</div>
+
+		<%= view :zoom_out, :view => "Papercube.ZoomButtonView", 
+			:properties => {
+				:zoom_out => true
+			},
+			:title => "Zoom view out"
+		%>
+		<%= slider_view :zoom_slider, 
+			:bind => {
+				:step => "Papercube.canvasController.zoomStep",
+				:minimum => "Papercube.canvasController.zoomValueMin",
+				:maximum => "Papercube.canvasController.zoomValueMax",
+				:value => "Papercube.canvasController.zoomValue"
+		}%>
+		<%= view :zoom_in, :view => "Papercube.ZoomButtonView", 
+			:properties => {
+				:zoom_out => false
+			},
+			:title => "Zoom view in"
+		%>
+	<% end %>
+
+
+	<% view :saved_view, 
+		:bind =>
+		{
+			:is_visible => "Papercube.viewController.savedPanelShowing"
+		},
+		:style => "display: none" do %>
+		<div class="saved-inner">
+			<h2>
+				Saved Items
+			</h2>
+			<div class="instructions">
+				Click on the rows below to view item.
+			</div>
+			 <%= collection_view :saved_items, :view=> 'Papercube.SavedItemsCollectionView', :tag=> "div", :bind => {
+				:content => "Papercube.viewController.savedContent"
+				},
+			    :example_view => 'Papercube.SavedItemsItemView' %>
+		     <div class="buttons">
+		       <%= button_view :clear_saved, :label => 'Clear Items', :action => "Papercube.viewController.clearSaved" %>
+		       <%= button_view :close_saved, :label => 'Close', :action => "Papercube.viewController.hideSaved" %>
+		     </div>
+		</div>
+
+	<% end %>
+
+	<% view :intro_view, 
+		:bind =>
+		{
+			:is_visible => "Papercube.viewController.showIntroView"
+		},
+		:style => "display: none" do %>
+		<div class="video-inner">
+			<h2>
+				Welcome to PaperCube!
+			</h2>
+			<div id="video"></div>
+      <div class="buttons">
+	       <%= button_view :close_video, :label => 'Hide Video', :action => "Papercube.viewController.hideVideo" %>
+					<%= checkbox_view :show_again, :bind => { :value => "Papercube.viewController.shouldNotShowAgain"}%> Don't show video again.
+	     </div>
+		</div>
+
+	<% end %>
+
+	<!-- Left -->
+
+	<% view :left_view, :view => "Papercube.LeftView", :class => "left-view-hidden" do %>
+
+	<%= label_view :search_heading, :tag => "div", :bind => {:value => "Papercube.searchController.searchHeading"}%>
+	  <% form_view :search_form do %>
+	    <div class="search-field">
+		    <%= text_field_view :field => :search_value, :hint => 'Search Term', :bind => {
+		      :value => 'Papercube.searchController.searchValue'
+		    } %>
+	    </div>
+		  <%= select_field_view :field => :search_key, :name_key => :name, :value_key => :key, :sort_key => :order, :bind => {
+	       :objects => 'Papercube.searchController.searchKeys',
+		    :value => 'Papercube.searchController.searchKey'
+
+	     } %>
+	     <div class="buttons">
+	       <%= button_view :field => :reset_button, :label => 'Cancel' %>
+	       <%= button_view :field => :submit_button, :label => 'Search!', :default => true,  
+	           :action=> 'Papercube.searchController.performSearch'%>
+	     </div>
+	   <% end %>
+	   <div class="search-hint">
+			 S<br/>E<br/>A<br/>R<br/>C<br/>H
+	 </div>
+	 <hr/>
+	 <%= collection_view :search_results, :view=> 'Papercube.SearchResultsCollectionView', :tag=> "div", :bind => {
+	   :content => 'Papercube.searchController.searchResults',
+	   :selection => 'Papercube.searchController.selection' },
+	   :example_view => 'Papercube.SearchResultsItemView' %>
+	   <div class="search-info">
+	<%= button_view :show_more, :bind=>{:is_visible => "Papercube.searchController.showMoreAllowed"}, :title => "show more", :action=>"Papercube.searchController.showMoreFromSearch", :tag => "div"%>
+	    <%= label_view :search_count, :bind=>{:is_visible => "SC.Binding.Not('Papercube.searchController.showRequestSpinner')", :value => "Papercube.searchController.searchCount"}, :tag => "div"%>
+	    <%= view :search_spinner, :bind=>{:is_visible => "Papercube.searchController.showRequestSpinner"}, :tag => "div"%>
+	   </div>  
+	   <% end %>
+	
+	<% view :loading_view, :bind => {:is_visible => "Papercube.stillLoading"} do %>
+		<div class="logo"></div>
+		<div class="name">Peter Bergström<br/>pbergstr@gmail.com<br/><br/>Santa Clara University</div>
+	<% end %>
+
+	<% view :canvas do %>
+
+	<% view :no_content, :style => "display: none;", :bind => 
+	{
+		:is_visible => "Papercube.viewController.noContentForView"
+	} do %>
+		<img height="230" width="430" src="<%= static_url('images/searchprompt.png') %>"/>
+	<% end %>
+
+
+		<% view :zoom_view, :view => "Papercube.ZoomView", :style => "display: none;" do %>
+			<div class="canvas-preview"></div>
+			<div class="portal-preview"></div>
+		<% end %>
+
+		<% tab_view :canvas_content_container, :outlet => true, :lazy_tabs => true, :class=> "canvas_content", :bind => { 
+			:now_showing => 'Papercube.viewController.nowShowing'
+		} do %>
+			
+			<!-- Circle View -->
+			<% view :circle_view_tab, :view => "Papercube.CircleViewHTML", :style => "display: none;", :bind => 
+			{
+				:is_visible => "Papercube.viewController.circleViewShowing",
+				:content => "Papercube.viewController.paperForView"
+			} do %>
+
+				<div class="rotate-left" style="display:none"></div>
+				<div class="rotate-right" style="display:none"></div>
+				<div class="meta-data" style=""><div class="title"></div><div class="authors"></div><div class="abstract"></div><div class="date"></div><div class="refs"></div><div class="cites"></div>
+				<div class="buttons"></div>
+				</div>
+
+				<div class="legend">
+					<div class="legend-label"># refs/cites:</div>
+					<div class="legend-graphic">least <img height="5" width="50" src="<%= static_url('images/gradient.gif') %>"/> most</div>
+				</div>	
+				<div class="div-canvas"></div>
+				<canvas class="canvas"></canvas>
+				<div class="settings">
+					<div class="strength">
+						<div class="title">Hide papers &le; <%= label_view :circle_view_strength_label,:class => "strength_label",
+						  :title=>"Hide papers that don't meet the specified threshold.",
+							:bind => {
+								:value => "Papercube.circleViewController.citeThreshold"
+							}
+						%> cites:</div>
+						<div class="slider-div">
+							<%= view :circle_view_min_strength, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+								:properties => {
+									:max_strength => false,
+									:controller => "Papercube.circleViewController"
+								}
+							%>
+							<%= slider_view :circle_view_strength_slider, :class => 'strength_slider',
+								:bind => {
+									:step => "Papercube.circleViewController.citeThresholdStep",
+									:minimum => "Papercube.circleViewController.citeThresholdValueMin",
+									:maximum => "Papercube.circleViewController.citeThresholdValueMax",
+									:value => "Papercube.circleViewController.citeThreshold"
+							}%>
+							<%= view :circle_view_max_strength, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+								:properties => {
+									:max_strength => true,
+									:controller => "Papercube.circleViewController"
+								}
+							%>
+						</div>
+					</div>
+					<div class="strength">
+						<div class="title">Hide papers &le; <%= label_view :circle_view_strength_label1, :class => "strength_label",
+					  :title=>"Hide papers that don't meet the specified threshold.",
+							:bind => {
+								:value => "Papercube.circleViewController.refThreshold"
+							}
+						%> refs:</div>
+						<div class="slider-div">
+							<%= view :circle_view_min_strength1, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+								:properties => {
+									:max_strength => false,
+									:option => true,
+									:controller => "Papercube.circleViewController"
+								}
+							%>
+							<%= slider_view :circle_view_strength_slider1, :class => "strength_slider",
+								:bind => {
+									:step => "Papercube.circleViewController.refThresholdStep",
+									:minimum => "Papercube.circleViewController.refThresholdValueMin",
+									:maximum => "Papercube.circleViewController.refThresholdValueMax",
+									:value => "Papercube.circleViewController.refThreshold"
+							}%>
+							<%= view :circle_view_max_strength1, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+								:properties => {
+									:max_strength => true,
+									:option => true,
+									:controller => "Papercube.circleViewController"
+								}
+							%>
+						</div>
+					</div>
+				</div>
+			<% end %>
+			
+			
+			
+			<!-- Paper Tree -->
+			
+			<% view :paper_tree_view_tab, :view => "Papercube.PaperTreeView", :style => "display: none;", :bind => 
+			{
+				:is_visible => "Papercube.viewController.paperTreeViewShowing",
+				:content => "Papercube.viewController.paperForView"
+			} do %>
+
+			<div class="meta-data" style=""><div class="title"></div><div class="authors"></div><div class="date"></div><div class="publisher"></div><div class="refs"></div><div class="cites"></div>
+			</div>
+				<div class="canvas">
+				</div>
+				<div class="settings">
+					<div class="depth">
+						<div class="title">Show up to <%= label_view :paper_tree_depth_label, :class => "depth_label",
+						:title=>"Show or hide additional levels of paper relationships.",
+							:bind => {
+								:value => "Papercube.paperTreeController.depth"
+							}
+						%> levels: </div>
+						<div class="slider-div">
+							<%= view :paper_tree_min_depth, :view => "Papercube.DepthButtonView", :class => "min_depth", :title => "Decrease the view's depth.",
+								:properties => {
+									:max_depth => false,
+									:controller => "Papercube.paperTreeController"
+								}
+							%>
+							<%= slider_view :paper_tree_depth_slider, :class => "depth_slider",
+								:bind => {
+									:step => "Papercube.paperTreeController.depthStep",
+									:minimum => "Papercube.paperTreeController.depthValueMin",
+									:maximum => "Papercube.paperTreeController.depthValueMax",
+									:value => "Papercube.paperTreeController.depth"
+							}%>
+							<%= view :paper_tree_max_depth, :view => "Papercube.DepthButtonView", :class => "max_depth", :title => "Increase the view's depth.",
+								:properties => {
+									:max_depth => true,
+									:controller => "Papercube.paperTreeController"
+								}
+							%>
+						</div>
+					</div>
+					<div class="strength">
+						<div class="title">Hide papers &le; <%= label_view :paper_tree_strength_label,:class => "strength_label",
+						:title=>"Hide papers that don't meet the specified threshold.",
+							:bind => {
+								:value => "Papercube.paperTreeController.citeThreshold"
+							}
+						%> cites:</div>
+						<div class="slider-div">
+							<%= view :paper_tree_min_strength, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+								:properties => {
+									:max_strength => false,
+									:controller => "Papercube.paperTreeController"
+								}
+							%>
+							<%= slider_view :paper_tree_strength_slider, :class => 'strength_slider',
+								:bind => {
+									:step => "Papercube.paperTreeController.citeThresholdStep",
+									:minimum => "Papercube.paperTreeController.citeThresholdValueMin",
+									:maximum => "Papercube.paperTreeController.citeThresholdValueMax",
+									:value => "Papercube.paperTreeController.citeThreshold"
+							}%>
+							<%= view :paper_tree_max_strength, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+								:properties => {
+									:max_strength => true,
+									:controller => "Papercube.paperTreeController"
+								}
+							%>
+						</div>
+					</div>
+					<div class="strength">
+						<div class="title">Hide papers &le; <%= label_view :paper_tree_strength_label1, :class => "strength_label",
+					  :title=>"Hide papers that don't meet the specified threshold.",
+							:bind => {
+								:value => "Papercube.paperTreeController.refThreshold"
+							}
+						%> refs:</div>
+						<div class="slider-div">
+							<%= view :paper_tree_min_strength1, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+								:properties => {
+									:max_strength => false,
+									:option => true,
+									:controller => "Papercube.paperTreeController"
+								}
+							%>
+							<%= slider_view :paper_tree_strength_slider1, :class => "strength_slider",
+								:bind => {
+									:step => "Papercube.paperTreeController.refThresholdStep",
+									:minimum => "Papercube.paperTreeController.refThresholdValueMin",
+									:maximum => "Papercube.paperTreeController.refThresholdValueMax",
+									:value => "Papercube.paperTreeController.refThreshold"
+							}%>
+							<%= view :paper_tree_max_strength1, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+								:properties => {
+									:max_strength => true,
+									:option => true,
+									:controller => "Papercube.paperTreeController"
+								}
+							%>
+						</div>
+					</div>
+				</div>
+				<% end %>
+
+
+
+			<!-- Paper Per Year -->
+
+			<% view :papers_per_year_view_tab, :view => "Papercube.PapersPerYearView", :style => "display: none;", :bind => 
+			{
+				:is_visible => "Papercube.viewController.papersPerYearViewShowing",
+				:content => "Papercube.viewController.paperForView"
+			} do %>
+
+			<div class="meta-data" style=""><div class="title"></div><div class="authors"></div><div class="date"></div><div class="publisher"></div><div class="refs blue"></div><div class="cites red"></div>
+			</div>
+
+			<div class="settings">
+
+				<div class="depth">
+					<div class="title" title="By clicking this, you will hide papers with unconfirmed or invalid publication dates."><span style="font-weight: bold; cursor: pointer" onclick="javascript: alert('Click to hide papers with unconfirmed or invalid publication dates. These dates are generally the date the paper was added to CiteSeer. When this is enabled, then only papers with validated publication dates will be shown.')">[?]</span> Show only papers w/confirmed pub dates:</div>
+					<%= checkbox_view :papers_year_bogus_years, :bind => { :value => "Papercube.papersPerYearController.hideBogusYears"}%>
+				</div>
+				<div class="depth">
+					<div class="title">Show up to <%= label_view :papers_per_year_depth_label, :class => "depth_label",
+					:title=>"Show or hide additional levels of paper relationships.",
+						:bind => {
+							:value => "Papercube.papersPerYearController.depth"
+						}
+					%> levels: </div>
+					<div class="slider-div">
+						<%= view :papers_per_year_min_depth, :view => "Papercube.DepthButtonView", :class => "min_depth", :title => "Decrease the view's depth.",
+							:properties => {
+								:max_depth => false,
+								:controller => "Papercube.papersPerYearController"
+							}
+						%>
+						<%= slider_view :papers_per_year_depth_slider, :class => "depth_slider",
+							:bind => {
+								:step => "Papercube.papersPerYearController.depthStep",
+								:minimum => "Papercube.papersPerYearController.depthValueMin",
+								:maximum => "Papercube.papersPerYearController.depthValueMax",
+								:value => "Papercube.papersPerYearController.depth"
+						}%>
+						<%= view :papers_per_year_max_depth, :view => "Papercube.DepthButtonView", :class => "max_depth", :title => "Increase the view's depth.",
+							:properties => {
+								:max_depth => true,
+								:controller => "Papercube.papersPerYearController"
+							}
+						%>
+					</div>
+				</div>
+				<div class="strength">
+					<div class="title">Hide papers &le; <%= label_view :papers_per_year_strength_label,:class => "strength_label",
+				  :title=>"Hide papers that don't meet the specified threshold.",
+						:bind => {
+							:value => "Papercube.papersPerYearController.citeThreshold"
+						}
+					%> cites:</div>
+					<div class="slider-div">
+						<%= view :papers_per_year_min_strength, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+							:properties => {
+								:max_strength => false,
+								:controller => "Papercube.papersPerYearController"
+							}
+						%>
+						<%= slider_view :papers_per_year_strength_slider, :class => 'strength_slider',
+							:bind => {
+								:step => "Papercube.papersPerYearController.citeThresholdStep",
+								:minimum => "Papercube.papersPerYearController.citeThresholdValueMin",
+								:maximum => "Papercube.papersPerYearController.citeThresholdValueMax",
+								:value => "Papercube.papersPerYearController.citeThreshold"
+						}%>
+						<%= view :papers_per_year_max_strength, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+							:properties => {
+								:max_strength => true,
+								:controller => "Papercube.papersPerYearController"
+							}
+						%>
+					</div>
+				</div>
+				<div class="strength">
+					<div class="title">Hide papers &le; <%= label_view :papers_per_year_strength_label1, :class => "strength_label",
+					:title=>"Hide papers that don't meet the specified threshold.",
+				  
+						:bind => {
+							:value => "Papercube.papersPerYearController.refThreshold"
+						}
+					%> refs:</div>
+					<div class="slider-div">
+						<%= view :papers_per_year_min_strength1, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+							:properties => {
+								:max_strength => false,
+								:option => true,
+								:controller => "Papercube.papersPerYearController"
+							}
+						%>
+						<%= slider_view :papers_per_year_strength_slider1, :class => "strength_slider",
+							:bind => {
+								:step => "Papercube.papersPerYearController.refThresholdStep",
+								:minimum => "Papercube.papersPerYearController.refThresholdValueMin",
+								:maximum => "Papercube.papersPerYearController.refThresholdValueMax",
+								:value => "Papercube.papersPerYearController.refThreshold"
+						}%>
+						<%= view :papers_per_year_max_strength1, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+							:properties => {
+								:max_strength => true,
+								:option => true,
+								:controller => "Papercube.papersPerYearController"
+							}
+						%>
+					</div>
+				</div>
+			</div>
+		<% end %>
+
+
+
+			<!-- Paper Stats -->
+
+			<% view :paper_stat_view_tab, :view => "Papercube.PaperstatView", :style => "display: none;", :class => "stat-view", :bind => 
+			{
+				:is_visible => "Papercube.viewController.paperStatViewShowing",
+				:content => "Papercube.viewController.paperForView"
+			} do %>
+			<div class="stats" style="display: none;">
+				<h3 class="title"></h3>
+				<div class="download"><span class="prompt">Source:</span> <span class="source-url"></span> (<span class="source-type"></span>)</div>
+				<div class="citeseer"><span class="prompt">CiteSeer:</span> <span class="citeseer-url"></span> (opens in new window)</div>
+
+				<div class="abstracts-col">
+					<div class="col1">
+						<div class="capsule-top">Abstract</div>
+						<div class="abstract"></div>
+
+						<div class="capsule-top peryear">Papers Per Year</div>
+						<div class="papersperyear">
+							<div class="data">
+							</div>
+							<div class="direction">Direction: <span class="refs-button">refs</span> | <span class="cites-button">cites</span></div>
+						</div>
+					</div>
+					<div class="col4">
+						<div class="capsule-top">
+							<div class="capsule-heading">
+								Authors <span class="author-count"></span>
+							</div>
+							<%= view :paper_stat_author_sort, :view => "Papercube.DropDownView",  :bind => {:value => 'Papercube.paperStatController.authorSortOrder', :choices => 'Papercube.paperStatController.authorSortOrderChoices'} %>
+						</div>
+						<div class="author-list data-list"></div>
+					</div>
+				</div>
+
+				
+				<div class="refcites-col">
+
+					<div class="col2">
+						<div class="capsule-top">
+							<div class="capsule-heading">
+								References <span class="ref-count"></span>
+							</div>
+							<%= view :paper_stat_reference_sort, :view => "Papercube.DropDownView", :bind => {:value => 'Papercube.paperStatController.referenceSortOrder', :choices => 'Papercube.paperStatController.referenceSortOrderChoices'} %>
+						</div>
+						<div class="references-list data-list"></div>
+					</div>
+					<div class="col3">
+						<div class="capsule-top">
+							<div class="capsule-heading">
+								Citations <span class="cite-count"></span>
+							</div>
+							<%= view :paper_stat_citation_sort, :view => "Papercube.DropDownView",  :bind => {:value => 'Papercube.paperStatController.citationSortOrder', :choices => 'Papercube.paperStatController.citationSortOrderChoices'} %>
+						</div>
+						<div class="citations-list data-list"></div>
+					</div>
+				</div>
+			</div>
+
+
+			<% end %>
+
+			<!-- Paper Graph -->
+
+			<% view :paper_graph_view_tab, :view => "Papercube.PaperGraphView", :class=> "paper_graph_view nodegraph", :style => "display: none;", :bind => 
+			{
+				:is_visible => "Papercube.viewController.paperGraphViewShowing",
+				:content => "Papercube.viewController.paperForView"
+			} do %>
+
+			<div class="graph-title"></div>
+			<div class="meta-data" style=""><div class="title"></div><div class="authors"></div><div class="date"></div><div class="publisher"></div><div class="refs"></div><div class="cites"></div>
+			</div>
+
+			
+			<div class="settings">
+				<div class="depth">
+					<div class="title">Show up to <%= label_view :paper_graph_depth_label, :class => "depth_label",
+					:title=>"Show or hide additional levels of paper relationships.",
+						:bind => {
+							:value => "Papercube.paperGraphController.depth"
+						}
+					%> levels: </div>
+					<div class="slider-div">
+						<%= view :paper_graph_min_depth, :view => "Papercube.DepthButtonView", :class => "min_depth", :title => "Decrease the view's depth.",
+							:properties => {
+								:max_depth => false,
+								:controller => "Papercube.paperGraphController"
+							}
+						%>
+						<%= slider_view :paper_graph_depth_slider, :class => "depth_slider",
+							:bind => {
+								:step => "Papercube.paperGraphController.depthStep",
+								:minimum => "Papercube.paperGraphController.depthValueMin",
+								:maximum => "Papercube.paperGraphController.depthValueMax",
+								:value => "Papercube.paperGraphController.depth"
+						}%>
+						<%= view :paper_graph_max_depth, :view => "Papercube.DepthButtonView", :class => "max_depth", :title => "Increase the view's depth.",
+							:properties => {
+								:max_depth => true,
+								:controller => "Papercube.paperGraphController"
+							}
+						%>
+					</div>
+				</div>
+				<div class="strength">
+					<div class="title">Hide papers &le; <%= label_view :paper_graph_strength_label,:class => "strength_label",
+					:title=>"Hide papers that don't meet the specified threshold.",
+						:bind => {
+							:value => "Papercube.paperGraphController.citeThreshold"
+						}
+					%> cites:</div>
+					<div class="slider-div">
+						<%= view :paper_graph_min_strength, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+							:properties => {
+								:max_strength => false,
+								:controller => "Papercube.paperGraphController"
+							}
+						%>
+						<%= slider_view :paper_graph_strength_slider, :class => 'strength_slider',
+							:bind => {
+								:step => "Papercube.paperGraphController.citeThresholdStep",
+								:minimum => "Papercube.paperGraphController.citeThresholdValueMin",
+								:maximum => "Papercube.paperGraphController.citeThresholdValueMax",
+								:value => "Papercube.paperGraphController.citeThreshold"
+						}%>
+						<%= view :paper_graph_max_strength, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+							:properties => {
+								:max_strength => true,
+								:controller => "Papercube.paperGraphController"
+							}
+						%>
+					</div>
+				</div>
+				<div class="strength">
+					<div class="title">Hide papers &le; <%= label_view :paper_graph_strength_label1, :class => "strength_label",
+				  :title=>"Hide papers that don't meet the specified threshold.",
+						:bind => {
+							:value => "Papercube.paperGraphController.refThreshold"
+						}
+					%> refs:</div>
+					<div class="slider-div">
+						<%= view :paper_graph_min_strength1, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+							:properties => {
+								:max_strength => false,
+								:option => true,
+								:controller => "Papercube.paperGraphController"
+							}
+						%>
+						<%= slider_view :paper_graph_strength_slider1, :class => "strength_slider",
+							:bind => {
+								:step => "Papercube.paperGraphController.refThresholdStep",
+								:minimum => "Papercube.paperGraphController.refThresholdValueMin",
+								:maximum => "Papercube.paperGraphController.refThresholdValueMax",
+								:value => "Papercube.paperGraphController.refThreshold"
+						}%>
+						<%= view :paper_graph_max_strength1, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+							:properties => {
+								:max_strength => true,
+								:option => true,
+								:controller => "Papercube.paperGraphController"
+							}
+						%>
+					</div>
+				</div>
+			</div>
+			<% end %>
+
+
+
+			<!-- Author Papers -->
+
+			<% view :author_paper_view_tab, :view => "Papercube.AuthorPaperView", :style => "display: none;", :bind => 
+			{
+				:is_visible => "Papercube.viewController.authorPaperViewShowing",
+				:content => "Papercube.viewController.authorForView"
+			} do %>
+
+			<div class="graph-title"></div>
+			<div class="meta-data" style=""><div class="title"></div><div class="authors"></div><div class="date"></div><div class="publisher"></div><div class="refs"></div><div class="cites"></div>
+			</div>
+
+			<div class="settings">
+        <div class="strength">
+        	<div class="title">Hide papers after <%= label_view :author_paper_end_label,:class => "strength_label",
+        	:title=>"Hide papers that don't meet the specified threshold.",
+				  
+        		:bind => {
+        			:value => "Papercube.authorPaperController.endYearThreshold"
+        		}
+        	%>:</div>
+        	<div class="slider-div">
+        		<%= view :author_paper_min_end, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "One year less.",
+        			:properties => {
+        				:max_strength => false,
+								:option => 2,
+        				:controller => "Papercube.authorPaperController"
+        			}
+        		%>
+        		<%= slider_view :author_paper_end_slider, :class => 'strength_slider',
+        			:bind => {
+        				:step => "Papercube.authorPaperController.endYearThresholdStep",
+        				:minimum => "Papercube.authorPaperController.endYearThresholdValueMin",
+        				:maximum => "Papercube.authorPaperController.endYearThresholdValueMax",
+        				:value => "Papercube.authorPaperController.endYearThresholdValue"
+        		}%>
+        		<%= view :author_paper_max_end, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "One more year.",
+        			:properties => {
+        				:max_strength => true,
+								:option => 2,
+        				:controller => "Papercube.authorPaperController"
+        			}
+        		%>
+        	</div>
+        </div>
+        				<div class="strength">
+					<div class="title">Hide papers before <%= label_view :author_paper_start_label,:class => "strength_label",
+				  :title=>"Hide papers that don't meet the specified threshold.",
+						:bind => {
+							:value => "Papercube.authorPaperController.startYearThreshold"
+						}
+					%>:</div>
+					<div class="slider-div">
+						<%= view :author_paper_min_start, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "One year less.",
+							:properties => {
+								:max_strength => false,
+								:option => 3,
+								:controller => "Papercube.authorPaperController"
+							}
+						%>
+						<%= slider_view :author_paper_start_slider, :class => 'strength_slider',
+							:bind => {
+								:step => "Papercube.authorPaperController.startYearThresholdStep",
+								:minimum => "Papercube.authorPaperController.startYearThresholdValueMin",
+								:maximum => "Papercube.authorPaperController.startYearThresholdValueMax",
+								:value => "Papercube.authorPaperController.startYearThresholdValue"
+						}%>
+						<%= view :author_paper_max_start, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "One more year.",
+							:properties => {
+								:max_strength => true,
+								:option => 3,
+								:controller => "Papercube.authorPaperController"
+							}
+						%>
+					</div>
+				</div>
+				<div class="strength">
+					<div class="title">Hide papers &le; <%= label_view :author_paper_strength_label,:class => "strength_label",
+					:title=>"Hide papers that don't meet the specified threshold.",
+				  
+						:bind => {
+							:value => "Papercube.authorPaperController.citeThreshold"
+						}
+					%> cites:</div>
+					<div class="slider-div">
+						<%= view :author_paper_min_strength, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+							:properties => {
+								:max_strength => false,
+								:controller => "Papercube.authorPaperController"
+							}
+						%>
+						<%= slider_view :author_paper_strength_slider, :class => 'strength_slider',
+							:bind => {
+								:step => "Papercube.authorPaperController.citeThresholdStep",
+								:minimum => "Papercube.authorPaperController.citeThresholdValueMin",
+								:maximum => "Papercube.authorPaperController.citeThresholdValueMax",
+								:value => "Papercube.authorPaperController.citeThreshold"
+						}%>
+						<%= view :author_paper_max_strength, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+							:properties => {
+								:max_strength => true,
+								:controller => "Papercube.authorPaperController"
+							}
+						%>
+					</div>
+				</div>
+				<div class="strength">
+					<div class="title">Hide papers &le; <%= label_view :author_paper_strength_label1, :class => "strength_label",
+					:title=>"Hide papers that don't meet the specified threshold.",
+				  
+						:bind => {
+							:value => "Papercube.authorPaperController.refThreshold"
+						}
+					%> refs:</div>
+					<div class="slider-div">
+						<%= view :author_paper_min_strength1, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+							:properties => {
+								:max_strength => false,
+								:option => true,
+								:controller => "Papercube.authorPaperController"
+							}
+						%>
+						<%= slider_view :author_paper_strength_slider1, :class => "strength_slider",
+							:bind => {
+								:step => "Papercube.authorPaperController.refThresholdStep",
+								:minimum => "Papercube.authorPaperController.refThresholdValueMin",
+								:maximum => "Papercube.authorPaperController.refThresholdValueMax",
+								:value => "Papercube.authorPaperController.refThreshold"
+						}%>
+						<%= view :author_paper_max_strength1, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+							:properties => {
+								:max_strength => true,
+								:option => true,
+								:controller => "Papercube.authorPaperController"
+							}
+						%>
+					</div>
+				</div>
+			</div>
+			<% end %>
+
+
+
+			<!-- Author Stats -->
+
+			<% view :author_stat_view_tab, :view => "Papercube.AuthorStatView", :style => "display: none;", :class => "stat-view", :bind => 
+			{
+				:is_visible => "Papercube.viewController.authorStatViewShowing",
+				:content => "Papercube.viewController.authorForView"
+			} do %>
+			<div class="stats" style="display: none;">
+				<h3 class="name"></h3>
+
+				<div class="col1">
+					<div class="sub-col1">
+						<div class="capsule-top">
+							<div class="capsule-heading">
+								Published Papers <span class="paper-count"></span>
+							</div>
+							<%= view :author_stat_paper_sort, :view => "Papercube.DropDownView",  :bind => {:value => 'Papercube.authorStatController.paperSortOrder', :choices => 'Papercube.authorStatController.paperSortOrderChoices'} %>
+						</div>
+						<div class="paper-list data-list"></div>
+					</div>
+
+					<div class="sub-col2">
+						<div class="capsule-top">
+							<div class="capsule-heading">
+								Collaborators <span class="collaborator-count"></span>
+							</div>
+							<%= view :author_stat_collaborator_sort, :view => "Papercube.DropDownView",  :bind => {:value => 'Papercube.authorStatController.collaboratorSortOrder', :choices => 'Papercube.authorStatController.authorSortOrderChoices'} %>
+						</div>
+						<div class="collaborator-list data-list"></div>
+					</div>
+
+					<div class="capsule-top peryear">Papers Published Per Year</div>
+					<div class="papersperyear">
+						<div class="data">
+						</div>
+					</div>
+				</div>
+				
+				<div class="refcites-col">
+					<div class="col2">
+						<div class="capsule-top">
+							<div class="capsule-heading">
+								Author References <span class="refauthor-count"></span>
+							</div>
+							<%= view :author_stat_reference_sort, :view => "Papercube.DropDownView", :bind => {:value => 'Papercube.authorStatController.refAuthorSortOrder', :choices => 'Papercube.authorStatController.authorSortOrderChoices'} %>
+						</div>
+						<div class="refauthor-list data-list"></div>
+					</div>
+
+					<div class="col3">
+						<div class="capsule-top">
+							<div class="capsule-heading">
+								 Author Cited By <span class="citeauthor-count"></span>
+							</div>
+							<%= view :author_stat_citation_sort, :view => "Papercube.DropDownView", :bind => {:value => 'Papercube.authorStatController.citeAuthorSortOrder', :choices => 'Papercube.authorStatController.authorSortOrderChoices'} %>
+						</div>
+						<div class="citeauthor-list data-list"></div>
+					</div>
+				</div>
+			</div>
+
+
+			<% end %>
+
+
+			<!-- Collaborators -->
+
+			<% view :collaborator_view_tab, :view => "Papercube.CollaboratorView", :class=> "collaborator_view nodegraph", :style => "display: none;", :bind => 
+			{
+				:is_visible => "Papercube.viewController.collaboratorViewShowing",
+				:content => "Papercube.viewController.authorForView"
+			} do %>
+
+			<div class="graph-title"></div>
+			<div class="meta-data" style=""><div class="title"></div><div></div><div></div><div></div><div></div></div>
+
+
+			
+			<div class="settings">
+				<div class="depth">
+					<div class="title">Show up to <%= label_view :collaborator_depth_label, :class => "depth_label",
+					:title=>"Show or hide additional levels of collaboration relationships.",
+						:bind => {
+							:value => "Papercube.collaboratorController.depth"
+						}
+					%> levels: </div>
+					<div class="slider-div">
+						<%= view :collaborator_min_depth, :view => "Papercube.DepthButtonView", :class => "min_depth", :title => "Decrease the view's depth.",
+							:properties => {
+								:max_depth => false,
+								:controller => "Papercube.collaboratorController"
+							}
+						%>
+						<%= slider_view :collaborator_depth_slider, :class => "depth_slider",
+							:bind => {
+								:step => "Papercube.collaboratorController.depthStep",
+								:minimum => "Papercube.collaboratorController.depthValueMin",
+								:maximum => "Papercube.collaboratorController.depthValueMax",
+								:value => "Papercube.collaboratorController.depth"
+						}%>
+						<%= view :collaborator_max_depth, :view => "Papercube.DepthButtonView", :class => "max_depth", :title => "Increase the view's depth.",
+							:properties => {
+								:max_depth => true,
+								:controller => "Papercube.collaboratorController"
+							}
+						%>
+					</div>
+				</div>
+				<div class="strength">
+					<div class="title">Hide authors &le; <%= label_view :collaborator_strength_label, :class => "strength_label",
+					:title=>"Hide authors that don't meet the specified threshold.",
+				  
+						:bind => {
+							:value => "Papercube.collaboratorController.collabThreshold"
+						}
+					%> collaborations:</div>
+					<div class="slider-div">
+						<%= view :collaborator_min_strength, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+							:properties => {
+								:max_strength => false,
+								:controller => "Papercube.collaboratorController"
+							}
+						%>
+						<%= slider_view :collaborator_strength_slider, :class => 'strength_slider',
+							:bind => {
+								:step => "Papercube.collaboratorController.collabThresholdStep",
+								:minimum => "Papercube.collaboratorController.collabThresholdValueMin",
+								:maximum => "Papercube.collaboratorController.collabThresholdValueMax",
+								:value => "Papercube.collaboratorController.collabThreshold"
+						}%>
+						<%= view :collaborator_max_strength, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+							:properties => {
+								:max_strength => true,
+								:controller => "Papercube.collaboratorController"
+							}
+						%>
+					</div>
+				</div>
+				<div class="strength">
+					<div class="title">Hide authors &le; <%= label_view :collaborator_strength_label1, :class => "strength_label",
+					:title=>"Hide authors that don't meet the specified threshold.",
+						:bind => {
+							:value => "Papercube.collaboratorController.paperThreshold"
+						}
+					%> papers written:</div>
+					<div class="slider-div">
+						<%= view :collaborator_min_strength1, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+							:properties => {
+								:max_strength => false,
+								:option => true,
+								:controller => "Papercube.collaboratorController"
+							}
+						%>
+						<%= slider_view :collaborator_strength_slider1, :class => 'strength_slider',
+							:bind => {
+								:step => "Papercube.collaboratorController.paperThresholdStep",
+								:minimum => "Papercube.collaboratorController.paperThresholdValueMin",
+								:maximum => "Papercube.collaboratorController.paperThresholdValueMax",
+								:value => "Papercube.collaboratorController.paperThreshold"
+						}%>
+						<%= view :collaborator_max_strength1, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+							:properties => {
+								:max_strength => true,
+								:option => true,
+								:controller => "Papercube.collaboratorController"
+							}
+						%>
+					</div>
+				</div>
+			</div>
+			<% end %>
+
+
+			<!-- Cite/Ref View -->
+
+			<% view :cite_ref_view_tab, :view => "Papercube.CiteRefView", :class=> "collaborator_view nodegraph", :style => "display: none;", :bind => 
+			{
+				:is_visible => "Papercube.viewController.citeRefViewShowing",
+				:content => "Papercube.viewController.authorForView"
+			} do %>
+
+			<div class="graph-title"></div>
+			<div class="meta-data" style=""><div class="title"></div><div></div><div></div><div></div><div></div></div>
+
+			
+			<div class="settings">
+				<div class="strength">
+					<div class="title">
+					<%= label_view :cite_ref_strength_prompt, :tag => 'span', 
+					:title=>"Hide authors that don't meet the specified threshold.",
+					
+						:bind => {
+							:value => "Papercube.citeRefController.strengthPrompt"
+						}
+					%> 
+					<%= label_view :cite_ref_strength_label,:class => "strength_label",
+					:title=>"Hide authors that don't meet the specified threshold.",
+						:bind => {
+							:value => "Papercube.citeRefController.linkThreshold"
+						}
+					%> times:</div>
+					<div class="slider-div">
+						<%= view :cite_ref_min_strength, :view => "Papercube.LinkStrengthButtonView", :class => 'min_strength', :title=> "Decrease threshold.",
+							:properties => {
+								:max_strength => false,
+								:controller => "Papercube.citeRefController"
+							}
+						%>
+						<%= slider_view :cite_ref_strength_slider,  :class => 'strength_slider',
+							:bind => {
+								:step => "Papercube.citeRefController.linkThresholdStep",
+								:minimum => "Papercube.citeRefController.linkThresholdValueMin",
+								:maximum => "Papercube.citeRefController.linkThresholdValueMax",
+								:value => "Papercube.citeRefController.linkThreshold"
+						}%>
+						<%= view :cite_ref_max_strength, :view => "Papercube.LinkStrengthButtonView",  :class => 'max_strength', :title=> "Increase threshold.",
+							:properties => {
+								:max_strength => true,
+								:controller => "Papercube.citeRefController"
+							}
+						%>
+					</div>
+				</div>
+			</div>
+			<% end %>
+
+			<!-- No Content -->
+
+
+		<% end %>
+		
+	<% end %>
+	
+	<div id="bottom"> </div>
+	
+
+
+<% end %>

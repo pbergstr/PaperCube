@@ -1,0 +1,110 @@
+
+.paper_tree_view_tab .canvas 
+{
+  z-index: 99;
+  position: absolute;
+	background: #eee;
+}
+
+.paper_tree_view_tab .item:hover
+{
+  background-color: #FFF594 !important;
+  border: 1px solid #FFA644 !important;
+}
+
+.paper_tree_view_tab .level0
+{
+  background: #D9FF7E static_url('images/glossylarger.png') repeat-x top center;
+  border:1px solid #50585B;
+}
+
+.paper_tree_view_tab.references .level0
+{
+  top: 0px !important;
+}
+
+.paper_tree_view_tab.citations .level0
+{
+  bottom: 0px !important;
+}
+
+.paper_tree_view_tab .level1
+{
+  background: #C8EB73 static_url('images/glossylarger.png') repeat-x top center;
+  border:1px solid #50585B;
+}
+
+.paper_tree_view_tab .level2
+{
+  background: #B8DA6A static_url('images/glossylarger.png') repeat-x top center;
+  border:1px solid #50585B;
+}
+
+.paper_tree_view_tab .level3
+{
+  background: #ACCC62 static_url('images/glossylarger.png') repeat-x top center;
+  border:1px solid #50585B;
+}
+
+.paper_tree_view_tab .level4
+{
+  background: #A2C05C static_url('images/glossylarger.png') repeat-x top center;
+  border:1px solid #50585B;
+}
+
+.paper_tree_view_tab .level5
+{
+  background: #97B355 static_url('images/glossylarger.png') repeat-x top center;
+  border:1px solid #50585B;
+}
+
+.paper_tree_view_tab .level6
+{
+  background: #89A34D static_url('images/glossylarger.png') repeat-x top center;
+  border:1px solid #50585B;
+}
+
+.paper_tree_view_tab .level7
+{
+  background: #7C9345 static_url('images/glossylarger.png') repeat-x top center;
+  border:1px solid #50585B;
+}
+
+.paper_tree_view_tab .level8
+{
+  background: #71853E static_url('images/glossylarger.png') repeat-x top center;
+  border:1px solid #50585B;
+}
+
+.paper_tree_view_tab .level9
+{
+  background: #697C39 static_url('images/glossylarger.png') repeat-x top center;
+  border:1px solid #50585B;
+}
+
+.paper_tree_view_tab .level10, .paper_tree_view_tab .level11
+{
+  background: #617234 static_url('images/glossylarger.png') repeat-x top center;
+  border:1px solid #50585B;
+}
+
+.paper_tree_view_tab .highlight
+{
+  background-color: lightgreen !important;
+  border: 1px solid green !important;
+}
+
+.paper_tree_view_tab .stub
+{
+  left: -1px;
+  background-color: #FF4848 !important;
+  border:1px solid #FF7575 !important;
+}
+
+.paper_tree_view_tab .buttons
+{
+  width: 400px;
+  height: 20px;
+  position: absolute;
+  bottom: 20px;
+} 

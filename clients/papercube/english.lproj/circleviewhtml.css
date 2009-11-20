@@ -1,0 +1,146 @@
+.circle_view_tab .medium div.authors
+{
+  display:none;
+}
+
+
+.circle_view_tab .div-canvas .title
+{
+  color: green;
+}
+
+.circle_view_tab .div-canvas .authors
+{
+  color: blue;
+}
+
+.circle_view_tab .medium.sel, .circle_view_tab .small.sel, .circle_view_tab .detail.sel
+{
+  background-color: #AAA;
+}
+
+.circle_view_tab .large.sel
+{
+  background-color: lightgreen;
+}
+
+.circle_view_tab .div-canvas
+{
+  z-index: 100;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+}
+
+
+.circle_view_tab .meta-data
+{
+  position: absolute;
+  width:351px;
+  display: block;
+  height:200px;
+  opacity: 0.8;
+  bottom:-185px;
+  right:-1px;
+  -webkit-transition-property: bottom;
+  -webkit-transition-duration: .5s;
+  z-index: 101;
+  font-size: 10px;
+  line-height: 11px;
+  -moz-border-radius-topright: 0px;
+  -webkit-border-top-right-radius:0px;
+  -moz-border-radius-topleft: 7px;
+  -webkit-border-top-left-radius:7px;
+  background: static_url('images/inspectorcircle.png') repeat-x 0px -2px;
+}
+
+.circle_view_tab .meta-data div
+{
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 5px;
+}
+
+.circle_view_tab .meta-data .title
+{
+  font-weight: bold;
+}
+
+.circle_view_tab .rotate-left
+{
+  position: relative;
+  height:39px;
+  width: 30px;
+	background: transparent static_url('arrow_sprite.png') no-repeat scroll 0px -0px;
+	cursor: pointer;
+  z-index:102;
+}
+
+.circle_view_tab .rotate-left.active
+{
+	background: transparent static_url('arrow_sprite.png') no-repeat scroll 0px -39px;
+}
+
+.circle_view_tab .rotate-right
+{
+  z-index:102;
+	cursor: pointer;
+  position: relative;
+  height:39px;
+  width: 30px;
+	background: transparent static_url('arrow_sprite.png') no-repeat scroll 0px -117px;
+}
+
+.circle_view_tab .rotate-right.active
+{
+	background: transparent static_url('arrow_sprite.png') no-repeat scroll 0px -78px;
+}
+
+.circle_view_tab .meta-data.show-meta-data
+{
+  bottom:15px;
+  -webkit-transition-property: bottom;
+  -webkit-transition-duration: .5s;
+}
+
+.circle_view_tab .legend
+{
+  position: absolute;
+  width:190px;
+  height:20px;
+  bottom:2px;
+  left:2px;
+  text-align: center;
+  font-size:12px;
+  color: #aaa;
+  z-index: 10001;
+}
+
+.circle_view_tab .legend img
+{
+  top:-2px; 
+  position:relative;
+}
+
+.circle_view_tab .canvas 
+{
+  z-index: 99;
+  position: absolute;
+}
+
+.circle_view_tab .legend .legend-graphic
+{
+  position: relative;
+  float: right;
+  margin-top:2px;
+  margin-right: 10px;
+}
+
+.circle_view_tab .legend .legend-label
+{
+  position: relative;
+  float: left;
+  margin-top:2px;
+  margin-left: 10px;
+}
+

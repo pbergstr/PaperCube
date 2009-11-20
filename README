@@ -1,0 +1,58 @@
+PaperCube by Peter Bergström (pbergstr@gmail.com)
+
+To try out PaperCube, go to http://papercube.peterbergstrom.com and to
+read more about PaperCube, go to http://www.peterbergstrom.com/research/
+
+===========
+
+NOTE!! 
+
+This README is still a work in progress. A lot of information has been omitted
+and things will be added later. If you have specific questions, please email
+Peter directly at pbergstr@gmail.com.
+
+===========
+
+RUNNING PAPERCUBE
+PaperCube uses SproutCore 0.9. To run in development, start sc-server in the
+main directory:
+
+% cd papercube
+% sc-server
+
+Then, point your browser to the following URL:
+
+http://localhost:4020/papercube
+
+===========
+
+BUILDING PAPERCUBE
+To build, in the main directory, run sc-build. Copy the resulting build to your
+web server. Please note that the sc-config file at the root of the directory
+can be used to customize it further.
+
+===========
+
+DATABASE AND SCHEMA
+Currently, the API is PHP-based. In the "database_api" directory, there is a file, 
+"request.php" that interfaces with the database.
+
+Currently, the database relies on CiteSeer. The database is quite large, but an
+exported version of the database is available at the following URL: 
+http://www.peterbergstrom.com/citeseer_final.zip
+
+The schema is available in the "database_api" directory in "database.txt"
+
+Please note that in the code, there are references to "/api/request.php". If 
+you change your server or install location, this will be different.
+
+===========
+
+Please look at http://www.peterbergstrom.com/ for more information.
+
+===========
+
+ACKNOWLEDGEMENTS
+
+PaperCube uses the SproutCore JavaScript framework.
+ 

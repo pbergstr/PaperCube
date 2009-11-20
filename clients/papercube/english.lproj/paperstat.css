@@ -1,0 +1,473 @@
+.stat-view
+{
+  position: absolute;
+  bottom: 22px;
+  top: 0px;
+  left: 20px;
+  right: 0px;
+  padding: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.stat-view  .authors div
+{
+  display: inline;
+  color: blue;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.stat-view .authors div:hover
+{
+  text-decoration: underline;
+}
+
+
+.stat-view h3
+{
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+  margin: 0px -10px 0px -10px;
+  padding: 10px;
+  padding-bottom: 0px;
+}
+
+.author_stat_view_tab.stat-view  h3
+{
+  padding-top: 0px;
+  margin-bottom: -10px;
+}
+
+.author_stat_view_tab .col1
+{
+  width: 580px;
+}
+
+.author_stat_view_tab .collaborator-list .stats, .author_stat_view_tab .refauthor-list .stats, .author_stat_view_tab .citeauthor-list .stats, .author-list .stats
+{
+  padding: 5px;
+}
+
+.author_stat_view_tab .collaborator-list .title, .author_stat_view_tab .refauthor-list .title, .author_stat_view_tab .citeauthor-list .title
+{
+  height: 15px !important;
+}
+
+.author_stat_view_tab .col1 .sub-col1, .author_stat_view_tab .col1 .sub-col2, .author_stat_view_tab .col2, .author_stat_view_tab .col3
+{
+  width: 280px !important;
+  float: right;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.author_stat_view_tab .col1 .sub-col1 .data-list, .author_stat_view_tab .col1 .sub-col2 .data-list
+{
+  height: 350px;
+}
+
+.author_stat_view_tab .col2 .data-list, .author_stat_view_tab .col3 .data-list
+{
+  height: 550px;
+}
+
+.author_stat_view_tab  .data-list, .author_stat_view_tab .data-list
+{
+  width: 278px !important;
+}
+
+.abstracts-col
+{
+  float: left;
+  width: 650px;
+}
+
+.col1
+{
+  float: left;
+  width: 380px;
+  padding:10px;
+  padding-left: 0px;
+  margin-top: 10px;
+  position: relative;
+}
+
+.author_stat_view_tab .refcites-col
+{
+  width: 580px;
+}
+
+.author_stat_view_tab.stat-view .refcites-col .data-list.show
+{
+  height: 550px;
+}
+
+
+.refcites-col
+{
+  float: left;
+  width: 650px;
+}
+
+.col2, .col3, .col4
+{
+  float: left;
+  width: 315px;
+  margin-top: 10px;
+  padding-top:10px;
+  margin-right:10px;
+  position: relative;
+}
+
+.col4
+{
+  width: 250px;
+}
+
+.col2
+{
+  margin-right: 10px;
+}
+
+.col3
+{
+  margin-right: 10px;
+}
+
+.stat-view .capsule-top
+{
+  background: static_url('images/cap.png') repeat-x center top;
+  border-color: #888;
+  border-style:solid;
+  border-width:1px;
+  color:#444;
+  font-weight:bold;
+  height:17px;
+  padding-top:0px;
+  text-align:left;
+  padding-left: 4px;
+  -webkit-box-shadow: 1px 1px 5px #555;
+  -moz-box-shadow: 1px 1px 5px #555;
+  text-shadow: #fff 1px 1px 1px;
+}
+
+.stat-view .capsule-top .capsule-heading
+{
+  position: relative;
+  float: left;
+}
+
+.stat-view .capsule-top .drop-down
+{
+  position: relative;
+  float: right;
+  width: 120px;
+  font-size: 10px;
+  font-weight: normal;
+  height: 17px;
+}
+
+.stat-view .capsule-top .drop-down .button
+{
+  color:#333;
+  height:12px;
+  line-height:14px;
+  padding-right:2px;
+}
+
+.stat-view .capsule-top .drop-down .list
+{
+  text-shadow: #fff 1px 1px 1px;
+  width:100px;
+}
+
+
+.stat-view .capsule-top .drop-down .list-item
+{
+  border-top: 1px solid #999;
+  color: #333;
+  background-color: #eee;
+}
+
+.stat-view .capsule-top .drop-down .list-item:hover
+{
+  background-color: #333;
+  color: #eee;
+  text-shadow: #111 1px 1px 1px;
+}
+
+.stat-view .capsule-top .drop-down .button:hover
+{
+  background-color:#ddd;
+}
+
+.stat-view .capsule-top .drop-down .button.active
+{
+  background-color:#ddd;
+}
+
+.stat-view .download, .stat-view .citeseer
+{
+  font-size: 11px;
+  margin-top: 1px;
+}
+
+.stat-view .source-url, .stat-view .citeseer-url
+{
+  color: blue;
+  height: 8px;
+  cursor: pointer;
+}
+
+
+.stat-view .source-url:hover,
+.stat-view .citeseer-url:hover
+{
+  text-decoration: underline;
+}
+
+.stat-view .prompt
+{
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-view .abstract.show
+{
+  padding: 10px;
+  opacity: 1.0;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 0.3s;
+}
+
+.stat-view .abstract
+{
+  height: 220px;
+  opacity: 0.5;
+  border: 1px solid #777;
+  border-top: 0px;
+  background: #eee static_url('images/detailgradient.png') repeat-x center top;
+  font-size: 11px;
+  overflow: hidden;
+  -webkit-box-shadow: 1px 1px 5px #333;
+  -moz-box-shadow: 1px 1px 5px #333;
+  line-height: 14px;
+}
+
+.stat-view .capsule-top.peryear
+{
+  margin-top:10px;
+}
+
+.author_stat_view_tab .papersperyear
+{
+  clear:both;
+}
+
+.stat-view .papersperyear.show
+{
+  padding: 10px;
+  height: 150px;
+  opacity: 1.0;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 0.3s;
+}
+
+.author_stat_view_tab .peryear
+{
+  margin-top:10px;
+  clear: both;
+}
+
+.stat-view .papersperyear .data
+{
+  height: 137px;
+  width: 347px;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+.author_stat_view_tab .peryear
+{
+  width: 564px;
+}
+
+.author_stat_view_tab .papersperyear
+{
+  width: 548px;
+}
+
+.author_stat_view_tab .papersperyear .data 
+{
+  width: 546px;
+}
+
+.stat-view .papersperyear .data .year
+{
+  position: relative;
+  width:30px;
+  vertical-align: middle;
+  text-align: right;
+  float: left;
+}
+
+.stat-view .papersperyear .data .bar
+{
+  position: relative;
+  float: left;
+  border: 1px solid #708090;
+  left:10px;
+  text-align: right;
+  background: static_url('images/graph.png') no-repeat center center;
+  -webkit-box-shadow: 1px 1px 5px #333;
+  -moz-box-shadow: 1px 1px 5px #333;
+  -moz-border-radius: 3px;
+  -webkit-border-radius:3px;
+}
+
+.stat-view .papersperyear .direction
+{
+  font-size: 11px;
+  font-weight: bold;
+  color: #666;
+  text-align: right;
+  width: 110px;
+  float: right;
+  margin-top: 3px;
+}
+
+.stat-view .papersperyear .direction .refs-button:hover,
+.stat-view .papersperyear .direction .cites-button:hover
+{
+  text-decoration: underline;
+}
+
+.stat-view .papersperyear .direction .refs-button,
+.stat-view .papersperyear .direction .cites-button
+{
+  font-weight: normal;
+  color: #405060;
+  cursor: pointer;
+}
+
+.stat-view .papersperyear .direction .refs-button.sel,
+.stat-view .papersperyear .direction .cites-button.sel
+{
+  font-weight: bold;
+}
+
+.stat-view .papersperyear
+{
+  height: 0px;
+  opacity: 0.2;
+  border: 1px solid #777;
+  border-top: 0px;
+  background-color: #eee;
+  font-size: 11px;
+  overflow: hidden;
+  -webkit-box-shadow: 1px 1px 5px #333;
+  -moz-box-shadow: 1px 1px 5px #333;
+  line-height: 14px;
+}
+
+
+.stat-view .data-list.show
+{
+  height:440px;
+  opacity: 1.0;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 0.3s;
+}
+
+.stat-view .data-list
+{
+  height:430px;
+  opacity: 0.5;
+  border: 1px solid #777;
+  border-top: 0px;
+  background: #eee static_url('images/detailgradient.png') repeat-x center top;
+  font-size: 11px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-box-shadow: 1px 1px 5px #333;
+  -moz-box-shadow: 1px 1px 5px #333;
+  line-height: 14px;
+  width: 248px;
+  position: relative;
+  top:0px;
+}
+
+.stat-view .refcites-col .data-list
+{
+  width: 313px;
+}
+
+.stat-view .data-list .title
+{
+  height:35px;
+  border-bottom: 1px solid #333;
+  padding: 5px;
+  cursor: default;
+  text-align: left;
+  line-height: 12px;
+} 
+
+.stat-view .author-list .title
+{
+  height: 15px;
+}
+
+.stat-view .data-list.show .title.sel
+
+{
+  background-color: #ddd;
+}
+
+.stat-view .data-list .bottom
+{
+  cursor: default;
+  display: none;
+  opacity: 0.5;
+  background-color: #fff;
+  -webkit-transition-property: display, opacity;
+  -webkit-transition-duration: 0.3s;
+}
+
+.stat-view .data-list .bottom.show
+{
+  opacity: 1;
+  display: block;
+  height: 65px;
+  border-top: 2px solid #999;
+  border-bottom: 1px solid #999;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 0.3s;
+}
+
+.stat-view .data-list .bottom .authors
+{
+  padding:5px;
+}
+
+.stat-view .data-list .bottom .info
+{
+  padding:5px;
+}
+
+.stat-view .data-list .bottom .info .left
+{
+  position: relative;
+  width: 100px;
+  float: left;
+  bottom: 2px;
+}
+
+.stat-view .data-list .bottom .info .right
+{
+  position: relative;
+  width: 100px;
+  float:right;
+  bottom: 2px;
+}

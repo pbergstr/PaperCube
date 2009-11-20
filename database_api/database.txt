@@ -1,0 +1,97 @@
+- MySQL dump 10.11 
+-- 
+-- Host: localhost	Database: citeseer -- 
+------------------------------------------------------ 
+-- Server version 5.0.45
+
+-- 
+-- Table structure for table 'author_rel' 
+--
+
+CREATE TABLE 'author_rel' ( 
+	'guid' varchar(40) NOT NULL, 
+	'aguid' varchar(40) NOT NULL, 
+	'pguid' varchar(40) NOT NULL, 
+	'type' varchar(18) NOT NULL, PRIMARY KEY ('guid'),
+	KEY 'guid' ('guid'), 
+	KEY 'pguid' ('pguid'), 
+	KEY 'aguid' ('aguid'),
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Table structure for table 'authorcachefull' 
+--
+
+CREATE TABLE 'authorcachefull' ( 
+	'guid' varchar(40) NOT NULL, 
+	'json' longtext NOT NULL, 
+	PRIMARY KEY ('guid')
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 
+-- Table structure for table 'authors' 
+--
+
+CREATE TABLE 'authors' ( 
+	'guid' varchar(40) NOT NULL, 
+	'type' varchar(10) NOT NULL, 
+	'name' varchar(254) NOT NULL, 
+	'step1' varchar(10) default NULL, 
+	PRIMARY KEY ('guid'), 
+	KEY 'name' ('name'), 
+	KEY 'guid' ('guid'), 
+	FULLTEXT KEY 'name_2' ('name'),
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Table structure for table 'papercache' --
+
+CREATE TABLE 'papercache' ( 
+	'guid' varchar(40) NOT NULL, 
+	'json' longtext NOT NULL, 
+	PRIMARY KEY ('guid')
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Table structure for table 'papers' 
+-- 
+
+CREATE TABLE 'papers' (
+	'guid' varchar(40) NOT NULL, 
+	'type' varchar(10) NOT NULL, 
+	'date' datetime NOT NULL, 
+	'subject' varchar(254) NOT NULL, 
+	'abstract' longtext NOT NULL, 
+	'language' varchar(12) NOT NULL, 
+	'source' varchar(254) NOT NULL, 
+	'format' varchar(12) NOT NULL, 
+	'url' varchar(254) NOT NULL, 
+	'title' varchar(254) NOT NULL, 
+	'rights' varchar(254) NOT NULL, 
+	'publisher' varchar(254) NOT NULL, 
+	'pubyear' int(11) default NULL, 
+	'fixedyear' int(11) default ’0’, 
+	PRIMARY KEY ('guid'),
+	KEY 'guid' ('guid'), 
+	KEY 'pubyear' ('pubyear'), 
+	FULLTEXT KEY 'title' ('title'), 
+	FULLTEXT KEY 'subject' ('subject'), 
+	FULLTEXT KEY 'abstract' ('abstract'), 
+	FULLTEXT KEY 'publisher' ('publisher'), 
+	FULLTEXT KEY 'rights' ('rights')
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Table structure for table 'reference_rel' 
+--
+
+CREATE TABLE 'reference_rel' ( 
+	'guid' varchar(40) NOT NULL, 
+	'rguid' varchar(40) NOT NULL, 
+	'pguid' varchar(40) NOT NULL, 
+	'type' varchar(10) NOT NULL, 
+	PRIMARY KEY ('guid'),
+	KEY 'guid' ('guid'), 
+	KEY 'pguid' ('pguid'), 
+	KEY 'rguid' ('rguid'),
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;

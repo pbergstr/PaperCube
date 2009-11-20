@@ -1,0 +1,176 @@
+.viewing_mode, .view_choice, .view-heading, .view_direction, .go_forward, .go_back
+{
+  position: relative;
+  float: left;
+  z-index: 100000;
+}
+
+.view-heading
+{
+  font-size:12px;
+  color: #aaa;
+  font-weight: bold;
+  margin-left: 10px;
+  margin-top: 3px;
+}
+
+.drop-down .button, .report, .saved-button
+{
+  text-align: left;
+  border: 1px solid #aaa;
+  background-color: #333;
+  color: #aaa;
+  height: 17px;
+  margin-top:2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left:10px;
+  margin-right:5px;
+  font-size: 12px;
+  cursor: pointer;
+  -moz-border-radius: 2px;
+  -webkit-border-radius:2px;
+}
+
+.windows .drop-down .button, .windows .report, .windows .saved-button
+{
+  font-size:11px;
+}
+
+.drop-down.disabled .button
+{
+   background-color: #555 !important;
+}
+
+.drop-down.down-orientation .button
+{
+  background: static_url('images/arrow.png') no-repeat center right;
+}
+
+.drop-down.up-orientation .button
+{
+  background: static_url('images/arrowup.png') no-repeat center right;
+}
+
+.drop-down .list
+{
+  -moz-border-radius: 2px;
+  -webkit-border-radius:2px;
+  position: relative;
+  background: #ccc  static_url('images/detailgradient.png') repeat-x top center;
+  border: 1px solid #aaa;
+  border-top: 0px;
+  margin-left: 10px;
+  cursor: pointer;
+  -webkit-box-shadow: 2px 2px 4px #222;
+  -moz-box-shadow: 2px 2px 4px #222;
+  z-index:100000;
+}
+
+.drop-down.down-orientation .list
+{
+  top:-1px;
+}
+
+.drop-down .list-item
+{
+  text-align: left;
+  position: relative;
+  border-top: 1px solid #aaa;
+  padding-left:5px;
+  color: #444;
+}
+
+.drop-down .list-item:hover
+{
+  position: relative;
+  background-color: #333;
+  color: #ccc;
+}
+
+.drop-down .button:hover, .report:hover, .saved-button:hover
+{
+  background-color:#222;
+}
+
+.drop-down .button.active
+{
+  background-color:#111;
+}
+
+.go_back .button 
+{
+  width:10px;
+  margin-left:5px !important;
+  margin-right:0px !important;
+}
+.go_forward .button
+{
+  width:10px;
+  margin-right:0px !important;
+  margin-left:5px !important;
+}
+
+.viewing_mode .button
+{
+  width:60px;
+}
+
+.view_direction .button
+{
+  width: 80px;
+}
+
+
+.view_choice .button
+{
+  width:90px;
+}
+
+
+.report
+{
+  width: 67px;
+  position: absolute;
+  right: 325px;
+  opacity: 0.5;
+}
+
+.saved-button
+{
+  width: 67px;
+  position: absolute;
+  right: 240px;
+}
+
+.viewing_mode .list
+{
+  width:70px;
+}
+
+.view_choice .list
+{
+  width:100px;
+}
+
+.go_back .list, .go_forward .list
+{
+  width:400px;
+  position: absolute;
+  top:20px;
+}
+
+.go_back .list
+{
+  left:-5px;
+}
+
+.go_forward .list
+{
+  left:-5px;
+}
+
+.view_direction .list
+{
+  width: 90px;
+}
