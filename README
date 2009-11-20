@@ -1,15 +1,21 @@
-PaperCube by Peter Bergström (pbergstr@gmail.com)
+PaperCube README
 
-To try out PaperCube, go to http://papercube.peterbergstrom.com and to
-read more about PaperCube, go to http://www.peterbergstrom.com/research/
-
-===========
-
-NOTE!! 
 
 This README is still a work in progress. A lot of information has been omitted
 and things will be added later. If you have specific questions, please email
 Peter directly at pbergstr@gmail.com.
+
+Last updated 11/20/2009.
+
+License: 
+PaperCube is open source software released under the MIT License (see license.js)
+
+Copyright 2008-2009, Peter Bergström
+
+===========
+
+To try out PaperCube, go to http://papercube.peterbergstrom.com and to
+read more about PaperCube, go to http://www.peterbergstrom.com/research/
 
 ===========
 
