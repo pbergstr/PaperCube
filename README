@@ -5,10 +5,11 @@ This README is still a work in progress. A lot of information has been omitted
 and things will be added later. If you have specific questions, please email
 Peter directly at pbergstr@gmail.com.
 
-Last updated 11/20/2009.
+Last updated 11/21/2009.
 
 License: 
-PaperCube is open source software released under the MIT License (see license.js)
+PaperCube is open source software released under the MIT License 
+(see license.js)
 
 Copyright 2008-2009, Peter Bergström
 
@@ -20,15 +21,23 @@ read more about PaperCube, go to http://www.peterbergstrom.com/research/
 ===========
 
 RUNNING PAPERCUBE
-PaperCube uses SproutCore 0.9. To run in development, start sc-server in the
-main directory:
+PaperCube uses SproutCore 0.9.23. To install it, please run the following 
+command:
+
+% sudo gem install sproutcore --version=0.9.23
+
+Then, to run in development, start sc-server in the main project directory:
 
 % cd papercube
 % sc-server
 
-Then, point your browser to the following URL:
+Finally, point your browser to the following URL:
 
 http://localhost:4020/papercube
+
+There is a wealth of additional information on the SproutCore wiki at
+http://wiki.github.com/sproutit/sproutcore and at the main project website,
+http://www.sproutcore.com
 
 ===========
 
@@ -40,11 +49,11 @@ can be used to customize it further.
 ===========
 
 DATABASE AND SCHEMA
-Currently, the API is PHP-based. In the "database_api" directory, there is a file, 
-"request.php" that interfaces with the database.
+Currently, the API is PHP-based. In the "database_api" directory, there is a 
+file, "request.php" that interfaces with the database.
 
-Currently, the database relies on CiteSeer. The database is quite large, but an
-exported version of the database is available at the following URL: 
+Currently, the database relies on CiteSeer. The database is quite large, but 
+an exported version of the database is available at the following URL: 
 http://www.peterbergstrom.com/citeseer_final.zip
 
 The schema is available in the "database_api" directory in "database.txt"
