@@ -13,7 +13,7 @@ require('controllers/authorpaper');
 
   This view shows the author's papers.
   
-  @extendsNodeGraph.NodeGraphView
+  @extends NodeGraph.NodeGraphView
   @author Peter Bergstrom
   @version 1.0
   @copyright 2008-2009 Peter Bergström.

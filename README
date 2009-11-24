@@ -1,11 +1,18 @@
 PaperCube README
-Last updated 11/21/2009.
+Last updated 11/23/2009.
 
-For more information about the project, please look on the wiki:
+For more information about the project, look at the wiki:
 http://wiki.github.com/pbergstr/PaperCube
 
-To try out PaperCube, go to http://papercube.peterbergstrom.com and to
-read more about PaperCube, go to http://www.peterbergstrom.com/research/
+To learn more about PaperCube, you can try it out at 
+http://papercube.peterbergstrom.com, view the demo video at http://vimeo.com/5661651. 
+
+If you want to read more about PaperCube and related research go to 
+http://www.peterbergstrom.com/research/
+
+There is code reference documentation for PaperCube and the NodeGraph 
+framework at http://www.peterbergstrom.com/papercube_docs/ and 
+http://www.peterbergstrom.com/nodegraph_docs/, respectively.
 
 If you have specific questions, please email Peter directly at 
 pbergstr@gmail.com.

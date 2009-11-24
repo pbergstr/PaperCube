@@ -15,7 +15,7 @@ require('controllers/papergraph');
   and also show all references/citations for it. Strong relationships will be shown
   with thicker and darker lines. This view uses SVG.
 
-  @extendsNodeGraph.NodeGraphView
+  @extends NodeGraph.NodeGraphView
   @author Peter Bergstrom
   @version 1.0
   @copyright 2008-2009 Peter Bergström.

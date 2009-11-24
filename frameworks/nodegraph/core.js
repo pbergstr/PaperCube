@@ -5,6 +5,11 @@
 //           the MIT License (see license.js)
 // ==========================================================================
 
+/**
+  @namespace
+  
+  This is the NodeGraph namespace.
+*/
 NodeGraph = SC.Object.create({
   
   /**

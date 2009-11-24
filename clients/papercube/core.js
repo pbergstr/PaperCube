@@ -5,6 +5,11 @@
 //           the MIT License (see license.js)
 // ==========================================================================
 
+/**
+ @namespace
+ 
+ The Papercube namespace.
+ */
 Papercube = SC.Object.create({
 
   // This will create the server for your application.  Add any namespaces
