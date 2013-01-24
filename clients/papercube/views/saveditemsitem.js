@@ -101,7 +101,7 @@ Papercube.SavedItemsItemView = SC.View.extend(
     var title = titleStr = content.get('title');
     if(title.length > 70)
     {
-      title = title.substr(0,69) + "&hellip";
+      title = title.substr(0,69) + "&hellip;";
     }
     innerHTML = [
      '<div class="title" title="'+titleStr+'">',
