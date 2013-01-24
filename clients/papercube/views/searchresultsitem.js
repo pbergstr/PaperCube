@@ -96,7 +96,7 @@ Papercube.SearchResultsItemView = SC.View.extend(
       var title = titleStr = (content.get('title')) ? content.get('title') : 'Untitled';
       if(title.length > 35)
       {
-        title = title.substr(0,33) + "&hellip";
+        title = title.substr(0,33) + "&hellip;";
       }
       innerHTML = [
        '<div class="title" title="'+titleStr+'">',
