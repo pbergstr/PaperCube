@@ -17,7 +17,7 @@ function main()
   }
   
   // Block Firefox 2 or below.
-  if (SC.isFireFox() && SC.Platform.Firefox < 3)
+  if (SC.isFireFox() && SC.browser.version < 3)
   {
     alert("To get the best user experience possible, please upgrade your browser.\n\nPlease use Firefox 3+, Safari 3+, Webkit, or Google Chrome.");
   }
